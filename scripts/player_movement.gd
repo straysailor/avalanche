@@ -5,21 +5,22 @@ extends CharacterBody2D
 @onready var slidebox = $SlideCollider
 
 @export var SPEED = 600.0
-@export var JUMP_VELOCITY = -450.0
+@export var JUMP_VELOCITY = -650.0
 @export var FRICTION = 100
 
 var sliding = false
+var crawling = false
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
-		velocity += get_gravity() * delta
+		velocity += get_gravity() * delta * 1.3
 
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+		
 	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction := Input.get_axis("move_left", "move_right")
 	if direction:
 		if !sliding:
@@ -48,12 +49,16 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, FRICTION)
 		
 	if Input.is_action_just_released("slide"):
+		## TO DO:
+		## Check if default hitbox is overlapping an an object/tile map
+		## if so, enter crawl mode
+		## else, stand up
 		sliding = false
 		FRICTION = 100
 		hitbox.disabled = false
 		slidebox.disabled = true
 		
 		
-	if !is_on_floor():
+	if !is_on_floor() and !sliding:
 		anim_sprite.play("jump")
 	move_and_slide()

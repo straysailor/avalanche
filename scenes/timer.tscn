@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3u7d3n8k6vgg"]
+
+[ext_resource type="Script" uid="uid://crs6j47bakffp" path="res://scripts/timer.gd" id="1_srplv"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5lxq6"]
+font_size = 70
+
+[node name="Timer" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_srplv")
+
+[node name="ClockFace" type="Label" parent="."]
+layout_mode = 0
+offset_left = 1725.0
+offset_top = 4.0
+offset_right = 1920.0
+offset_bottom = 103.0
+text = "0.00"
+label_settings = SubResource("LabelSettings_5lxq6")
+horizontal_alignment = 1
